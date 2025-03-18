@@ -1,0 +1,141 @@
+/* style.css */
+:root {
+  --primary-red: #ff3b30;
+  --pure-white: #ffffff;
+  --dark-bg: #0a0a0a;
+}
+
+body {
+  font-family: "Anton", sans-serif;
+  color: var(--pure-white);
+  background: var(--dark-bg);
+  overflow-x: hidden;
+}
+
+/* En-tête stylisé */
+.glass-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.logo {
+  height: 60px;
+  transition: transform 0.3s ease;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.2rem;
+  color: var(--pure-white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+/* Animation de survol moderne */
+.hvr-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-red);
+  transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hvr-underline:hover::after {
+  width: 100%;
+}
+
+/* Section héroïque */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("background-home.jpg") center/cover fixed;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.name-title {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 4.5rem;
+  letter-spacing: 8px;
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.job-title {
+  font-family: "Anton", sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  color: var(--primary-red);
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1.2rem 2.5rem;
+  background: var(--primary-red);
+  color: var(--pure-white);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 59, 48, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .name-title {
+    font-size: 3rem;
+  }
+}

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>MED AYED - Commercial</title>
+      <style>
+         /* ====================================================
+         Réinitialisation et Variables CSS
+         ==================================================== */
+         * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         }
+         :root {
+         --cinema-red: #ff0000;
+         }
+         /* ====================================================
+         Chargement des polices locales
+         ==================================================== */
+         @font-face {
+         font-family: "AlumniSansPinstripe-Regular";
+         src: url("./fonts/AlumniSansPinstripe-Regular.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "Anton-Regular";
+         src: url("./fonts/Anton-Regular.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "BarlowCondensedThin";
+         src: url("./fonts/BarlowCondensed-Thin.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "AileronUltraLight";
+         src: url("./fonts/Aileron-UltraLight.woff") format("woff");
+         }
+         /* ====================================================
+         Styles Globaux & Arrière-plan
+         ==================================================== */
+         body {
+         font-family: "BarlowCondensedThin", sans-serif;
+         background: black;
+         color: white;
+         overflow-x: hidden;
+         position: relative;
+         }
+         .background-container {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100vw;
+         height: 100vh;
+         z-index: -1;
+         }
+         .background-container img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         filter: brightness(0.7);
+         }
+         /* ===========================================
+         Style du Header et du Menu
+         =========================================== */
+         /* ================= HEADER & MENU COMMUN ================= */
+         header {
+         position: fixed; /* Changé de absolute à fixed pour toutes les pages */
+         top: 0;
+         left: 0;
+         width: 100%;
+         z-index: 100;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 20px 40px;
+         background: transparent; /* Ajouté pour uniformité */
+         }
+         .logo img {
+         height: 50px; /* Garder cette valeur partout */
+         }
+         nav ul {
+         list-style: none;
+         display: flex;
+         gap: 30px; /* Rétabli la valeur de l'index */
+         }
+         nav a {
+         font-family: "AlumniSansPinstripe-Regular", sans-serif;
+         font-size: 30px !important; /* Force la taille partout */
+         color: #ffffff;
+         text-transform: uppercase;
+         transition: all 0.3s ease;
+         text-decoration: none;
+         position: relative;
+         }
+         nav a:hover {
+         color: #ff0000;
+         transform: translateY(-3px);
+         }
+         /* Dropdown unifié */
+         nav ul li .dropdown {
+         display: none;
+         position: absolute;
+         top: 60%;
+         left: 100;
+         padding: 15px;
+         border-radius: 5px;
+         }
+         nav ul li:hover .dropdown {
+         display: block;
+         }
+         nav ul li .dropdown a {
+         font-size: 25px !important;
+         display: block;
+         padding: 8px 0;
+         white-space: nowrap;
+         }
+         /* ====================================================
+         Carousel (Carrousel de Projets)
+         ==================================================== */
+         .carousel-container {
+         margin-top: 150px; /* Pour éloigner le carousel du header */
+         position: relative;
+         width: 100%;
+         height: 70vh;
+         overflow: hidden;
+         }
+         .slide {
+         display: none;
+         width: 100%;
+         height: 100%;
+         text-align: center;
+         padding: 20px;
+         animation: fadeIn 0.8s ease forwards;
+         }
+         .slide.active {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         }
+         .project-slide {
+         display: flex;
+         flex-direction: column;
+         gap: 10px;
+         align-items: center;
+         }
+         .project-slide h2 {
+         font-family: "AlumniSansPinstripe-Regular", sans-serif;
+         font-size: 30px;
+         text-transform: uppercase;
+         color: white;
+         margin-bottom: 10px;
+         }
+         /* Galerie d'images : 4 images disposées en 2 colonnes sur 2 lignes */
+         .gallery {
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         gap: 10px;
+         width: 100%;
+         max-width: 600px;
+         }
+         .gallery img {
+         width: 100%;
+         border-radius: 8px;
+         transition: transform 0.3s ease;
+         cursor: pointer;
+         object-fit: cover;
+         }
+         .gallery img:hover {
+         transform: scale(1.1);
+         }
+         /* Texte Play Video – Sans bouton, juste texte cliquable */
+         .play-video {
+         font-family: "AlumniSansPinstripe-Regular", sans-serif;
+         font-size: 40px;
+         text-transform: uppercase;
+         color: var(--cinema-red);
+         cursor: pointer;
+         transition: transform 0.3s ease;
+         margin-top: 10px;
+         }
+         .play-video:hover {
+         transform: scale(1.1);
+         }
+         /* ====================================================
+         Flèches de navigation du Carousel
+         ==================================================== */
+         .arrow {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         background: none;
+         border: none;
+         cursor: pointer;
+         z-index: 2000;
+         }
+         .arrow img {
+         height: 40px;
+         /* Vous remplacerez l'image par une icône de votre choix */
+         filter: invert(1);
+         }
+         .arrow.left {
+         left: 10px;
+         }
+         .arrow.right {
+         right: 10px;
+         }
+         /* ====================================================
+         Modal Vidéo – s'ouvre dans la même page à 45% de la largeur
+         ==================================================== */
+         .video-modal {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         width: 45vw; /* 45% de la largeur de la fenêtre */
+         background: rgba(0, 0, 0, 0.95);
+         border-radius: 10px;
+         z-index: 3000;
+         }
+         .video-modal-content {
+         position: relative;
+         width: 100%;
+         height: 0;
+         padding-bottom: 56.25%; /* Ratio 16:9 */
+         }
+         .video-modal-content iframe,
+         .video-modal-content video {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         border: none;
+         }
+         .close-modal {
+         position: absolute;
+         top: -40px;
+         right: -20px;
+         background: var(--cinema-red);
+         color: white;
+         border: none;
+         font-size: 30px;
+         cursor: pointer;
+         padding: 5px 10px;
+         border-radius: 5px;
+         transition: transform 0.3s ease;
+         }
+         .close-modal:hover {
+         transform: scale(1.1);
+         }
+         /* ====================================================
+         Animation de Fade-In
+         ==================================================== */
+         @keyframes fadeIn {
+         from {
+         opacity: 0;
+         transform: translateY(20px);
+         }
+         to {
+         opacity: 1;
+         transform: translateY(0);
+         }
+         }
+         /* ====================================================
+         Logo en bas de page – Fixé, Centré
+         ==================================================== */
+         .page-logo {
+         position: fixed;
+         bottom: 20px;
+         left: 50%;
+         transform: translateX(-50%);
+         height: 40px;
+         opacity: 0.7;
+         z-index: 1000;
+         }
+         /* ====================================================
+         Responsive
+         ==================================================== */
+         @media (max-width: 768px) {
+         .gallery {
+         grid-template-columns: repeat(2, 1fr);
+         }
+         .carousel-container {
+         height: 60vh;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Arrière-plan -->
+      <div class="background-container">
+         <img
+            src="images/781dd086-78e9-4571-8c7f-c156eafa2a63.jpg"
+            alt="Commercial Background"
+            />
+      </div>
+      <!-- Header -->
+      <header>
+         <div class="logo">
+            <a href="index.html">
+            <img src="images/Med Ayed Logo-03.png" alt="Logo" />
+            </a>
+         </div>
+         <nav>
+            <ul class="nav-links">
+               <li><a href="index.html">HOME</a></li>
+               <li><a href="about.html">ABOUT</a></li>
+               <li>
+                  <a href="production.html">PRODUCTION</a>
+                  <div class="dropdown">
+                     <a href="fiction.html">Fiction</a>
+                     <a href="documentary.html">Documentary</a>
+                  </div>
+               </li>
+               <li><a href="commercial.html">COMMERCIAL</a></li>
+               <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+         </nav>
+      </header>
+      <!-- Carousel : affichage d'un seul projet à la fois -->
+      <main>
+         <div class="carousel-container">
+            <!-- Flèches de navigation -->
+            <button class="arrow left" onclick="prevSlide()">
+            <img src="images/left-arrow.svg" alt="Previous" />
+            </button>
+            <button class="arrow right" onclick="nextSlide()">
+            <img src="images/right-arrow.svg" alt="Next" />
+            </button>
+            <!-- Slide 1: BLACKLANE -->
+            <div class="slide active" id="slide-1" data-index="0">
+               <div class="project-slide">
+                  <h2>BLACKLANE</h2>
+                  <div class="gallery">
+                     <img
+                        src="images/bl1.jpg"
+                        alt="Blacklane 1"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/bl3.jpg"
+                        alt="Blacklane 2"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/bl4.jpg"
+                        alt="Blacklane 3"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/bl5.jpg"
+                        alt="Blacklane 4"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                  </div>
+                  <div
+                     class="play-video"
+                     onclick="openVideo('https://www.youtube.com/watch?v=yzkX2hdzNd0')"
+                     >
+                     PLAY VIDEO
+                  </div>
+               </div>
+            </div>
+            <!-- Slide 2: SELF DESTRUCTION -->
+            <div class="slide" id="slide-2" data-index="1">
+               <div class="project-slide">
+                  <h2>SELF DESTRUCTION</h2>
+                  <div class="gallery">
+                     <img
+                        src="images/des 1.jpg"
+                        alt="Self Destruction 1"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/des 2.jpg"
+                        alt="Self Destruction 2"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/des 3.jpg"
+                        alt="Self Destruction 3"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/des 4 copie.jpg"
+                        alt="Self Destruction 4"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                  </div>
+                  <div
+                     class="play-video"
+                     onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID_SELF_DESTRUCTION')"
+                     >
+                     PLAY VIDEO
+                  </div>
+               </div>
+            </div>
+            <!-- Slide 3: KRYSTAL -->
+            <div class="slide" id="slide-3" data-index="2">
+               <div class="project-slide">
+                  <h2>KRYSTAL</h2>
+                  <div class="gallery">
+                     <img
+                        src="images/krystal 2.JPG"
+                        alt="Krystal 1"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/krystal-2 2.JPG"
+                        alt="Krystal 2"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/krystal-6 2.JPG"
+                        alt="Krystal 3"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/krystal 2.JPG"
+                        alt="Krystal 4"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                  </div>
+                  <div
+                     class="play-video"
+                     onclick="openVideo('videos/krystal-2 2.MP4')"
+                     >
+                     PLAY VIDEO
+                  </div>
+               </div>
+            </div>
+            <!-- Slide 4: FACTOR -->
+            <div class="slide" id="slide-4" data-index="3">
+               <div class="project-slide">
+                  <h2>FACTOR</h2>
+                  <div class="gallery">
+                     <img
+                        src="images/30 s-2.jpg"
+                        alt="Factor 1"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/30 s-6.jpg"
+                        alt="Factor 2"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/30 s-7.jpg"
+                        alt="Factor 3"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                     <img
+                        src="images/30 s-8.jpg"
+                        alt="Factor 4"
+                        loading="lazy"
+                        onclick="openLightbox(this.src)"
+                        />
+                  </div>
+                  <div class="play-video" onclick="openVideo('videos/30 s-3.mp4')">
+                     PLAY VIDEO
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+      <!-- Modal Lightbox -->
+      <div id="lightbox" onclick="this.style.display='none'">
+         <img src="" alt="" />
+      </div>
+      <!-- Modal Vidéo -->
+      <div id="videoModal" class="video-modal" onclick="closeVideoModal()">
+         <div class="video-modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeVideoModal()">×</button>
+            <iframe
+               src=""
+               frameborder="0"
+               allow="autoplay; fullscreen"
+               allowfullscreen
+               ></iframe>
+         </div>
+      </div>
+      <script>
+         const slides = document.querySelectorAll(".slide");
+         let currentSlide = 0;
+         
+         function showSlide(index) {
+           slides.forEach((slide, i) => {
+             if (i === index) {
+               slide.classList.add("active");
+               slide.style.opacity = "1";
+             } else {
+               slide.classList.remove("active");
+               slide.style.opacity = "0";
+             }
+           });
+           currentSlide = index;
+         }
+         
+         function nextSlide() {
+           let next = currentSlide + 1;
+           if (next >= slides.length) next = 0;
+           showSlide(next);
+         }
+         
+         function prevSlide() {
+           let prev = currentSlide - 1;
+           if (prev < 0) prev = slides.length - 1;
+           showSlide(prev);
+         }
+         
+         // Optionnel: navigation automatique
+         // setInterval(nextSlide, 5000);
+         
+         // Modal Vidéo
+         function openVideo(url) {
+           const modal = document.getElementById("videoModal");
+           modal.style.display = "flex";
+           modal.querySelector("iframe").src = url;
+         }
+         
+         function closeVideoModal() {
+           const modal = document.getElementById("videoModal");
+           modal.style.display = "none";
+           modal.querySelector("iframe").src = "";
+         }
+         
+         // Modal Lightbox
+         function openLightbox(src) {
+           const lightbox = document.getElementById("lightbox");
+           lightbox.style.display = "flex";
+           lightbox.querySelector("img").src = src;
+         }
+      </script>
+      <style>
+         /* Styles pour la modal vidéo */
+         .video-modal {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         width: 45vw;
+         background: rgba(0, 0, 0, 0.95);
+         border-radius: 10px;
+         z-index: 3000;
+         }
+         .video-modal-content {
+         position: relative;
+         width: 100%;
+         height: 0;
+         padding-bottom: 56.25%;
+         }
+         .video-modal-content iframe,
+         .video-modal-content video {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         border: none;
+         }
+         .close-modal {
+         position: absolute;
+         top: -40px;
+         right: -20px;
+         background: var(--cinema-red);
+         color: white;
+         border: none;
+         font-size: 30px;
+         cursor: pointer;
+         padding: 5px 10px;
+         border-radius: 5px;
+         transition: transform 0.3s ease;
+         }
+         .close-modal:hover {
+         transform: scale(1.1);
+         }
+      </style>
+   </body>
+</html>s

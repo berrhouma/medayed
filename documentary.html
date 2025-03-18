@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MED AYED - Documentary</title>
+    <style>
+      /* =============================================
+         Réinitialisation et Variables 
+         ============================================= */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --cinema-red: #ff0000;
+      }
+      /* =============================================
+         Chargement des polices locales
+         ============================================= */
+      @font-face {
+        font-family: "BarlowCondensedThin";
+        src: url("./fonts/BarlowCondensed-Thin.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Anton-Regular";
+        src: url("./fonts/Anton-Regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "AileronUltraLight";
+        src: url("./fonts/Aileron-UltraLight.woff") format("woff");
+      }
+      @font-face {
+        font-family: "AlumniSansPinstripe-Regular";
+        src: url("./fonts/AlumniSansPinstripe-Regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Quicksand-Variable";
+        src: url("./fonts/Quicksand-VariableFont_wght.woff2") format("woff2");
+      }
+      /* =============================================
+         Styles Globaux
+         ============================================= */
+      body {
+        font-family: "BarlowCondensedThin", sans-serif;
+        color: white;
+        background-color: black;
+        overflow-x: hidden;
+        position: relative;
+      }
+      /* =============================================
+         Arrière-plan plein écran
+         ============================================= */
+      .background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+      }
+      .background-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.7);
+      }
+      /* ================= HEADER & MENU COMMUN ================= */
+      header {
+        position: fixed; /* Changé de absolute à fixed pour toutes les pages */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: transparent; /* Ajouté pour uniformité */
+      }
+      .logo img {
+        height: 50px; /* Garder cette valeur partout */
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px; /* Rétabli la valeur de l'index */
+      }
+      nav a {
+        font-family: "AlumniSansPinstripe-Regular", sans-serif;
+        font-size: 30px !important; /* Force la taille partout */
+        color: #ffffff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+      }
+      nav a:hover {
+        color: #ff0000;
+        transform: translateY(-3px);
+      }
+      /* Dropdown unifié */
+      nav ul li .dropdown {
+        display: none;
+        position: absolute;
+        top: 60%;
+        left: 100;
+        padding: 15px;
+        border-radius: 5px;
+      }
+      nav ul li:hover .dropdown {
+        display: block;
+      }
+      nav ul li .dropdown a {
+        font-size: 25px !important;
+        display: block;
+        padding: 8px 0;
+        white-space: nowrap;
+      }
+      /* =============================================
+         Main Content – Section Documentary
+         ============================================= */
+      main {
+        margin-top: 120px; /* Laisse la place au header fixe */
+        padding: 20px 50px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Grille à 3 colonnes : 1ère flip card, image verticale, 2ème flip card */
+      .doc-grid {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 20px;
+        align-items: center;
+        justify-items: center;
+      }
+      /* Flip Card – format A4 portrait pour la flip card */
+      .flip-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        width: 100%;
+        /* Format A4 portrait : 210 mm x 297 mm → ratio ≈ 210/297 ≈ 0.707 */
+        aspect-ratio: 210 / 297;
+        perspective: 1000px;
+      }
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        text-align: center;
+      }
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+      /* Styles pour les faces avant et arrière des flip cards */
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        backface-visibility: hidden;
+        overflow: hidden;
+      }
+      /* Règle pour réduire la taille des flip cards issues de la grille dans la page Documentary */
+      .doc-grid .flip-card {
+        transform: scale(0.8) !important;
+      }
+      /* Face avant : affichage de l'image */
+      .flip-card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Face arrière : informations du film */
+      .flip-card-back {
+        background: rgba(0, 0, 0, 0.9);
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+      }
+      /* Titres des films sur la face arrière en rouge, en majuscules */
+      .flip-card-back h3 {
+        font-family: "AlumniSansPinstripet", sans-serif;
+        font-size: 24px;
+        text-transform: uppercase;
+        color: var(
+          --cinema-red
+        ); /* Assurez-vous que --cinema-red est défini dans :root, par exemple: --cinema-red: #ff0000; */
+        margin-bottom: 5px;
+      }
+      /* Informations sur le film en blanc, en minuscules, police Aileron-UltraLight */
+      .flip-card-back p {
+        font-family: "Aileron-UltraLight", sans-serif;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #ffffff;
+        margin-bottom: 5px;
+      }
+      /* Bouton PLAY TRAILER sur la face arrière */
+      .flip-card-back .play-button {
+        padding: 8px 15px;
+        background: var(--cinema-red);
+        border: none;
+        color: white;
+        font-family: "AlumniSansPinstripet", sans-serif;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .flip-card-back .play-button:hover {
+        transform: scale(1.05);
+      }
+      /* =============================================
+         Image verticale entre les flip cards
+         ============================================= */
+      .vertical-image {
+        width: 200px; /* Largeur fixe, à ajuster selon le design */
+        aspect-ratio: 2 / 3; /* Par exemple, pour une image verticale */
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .vertical-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .vertical-image img:hover {
+        transform: scale(1.05);
+      }
+      /* =============================================
+         Logo en bas de page (fixé, centré)
+         ============================================= */
+      .page-logo {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 40px;
+        opacity: 0.7;
+        z-index: 1000;
+      }
+      /* =============================================
+         Responsive
+         ============================================= */
+      @media (max-width: 768px) {
+        .doc-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Arrière-plan -->
+    <div class="background-container">
+      <img src="images/38.jpg" alt="Documentary Background" />
+    </div>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/Med Ayed Logo-03.png" alt="Logo" />
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li>
+            <a href="production.html">PRODUCTION</a>
+            <div class="dropdown">
+              <a href="fiction.html">Fiction</a>
+              <a href="documentary.html">Documentary</a>
+            </div>
+          </li>
+          <li><a href="commercial.html">COMMERCIAL</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Main Content : Section Documentary -->
+    <main>
+      <section class="doc-grid">
+        <!-- Flip Card 1 (Première affiche) -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/f1.jpg" alt="Documentary Film 1" />
+            </div>
+            <div class="flip-card-back">
+              <h3>QATAR X F1</h3>
+              <p>director: john doe</p>
+              <p>production: xyz studios</p>
+              <p>producer: jane smith</p>
+              <button
+                class="play-button"
+                onclick="window.open('https://vimeo.com/1000161208')"
+              >
+                PLAY TRAILER
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Vertical Image entre Flip Cards -->
+        <div class="vertical-image">
+          <img src="images/docu 2.png" alt="Vertical Documentary" />
+        </div>
+        <!-- Flip Card 2 (Deuxième affiche) -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/flint 2.jpg" alt="Documentary Film 2" />
+            </div>
+            <div class="flip-card-back">
+              <h3>FLINT POLICE</h3>
+              <p>director: mike johnson</p>
+              <p>production: abc productions</p>
+              <p>producer: emily davis</p>
+              <button
+                class="play-button"
+                onclick="window.open('https://vimeo.com/VIDEO_DOC2', '_blank')"
+              >
+                PLAY TRAILER
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Logo en bas de page -->
+    <img src="images/Med Ayed Logo-03.png" alt="Logo" class="page-logo" />
+  </body>
+</html>

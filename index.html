@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Med Ayed - Cinematographer</title>
+    <style>
+      /* ===========================================
+         Variables CSS pour le contrôle de l'espacement
+         =========================================== */
+      :root {
+        /* Contrôle l'espacement vertical entre "MED AYED" et "Cinematographer"
+         Diminuez cette valeur pour rapprocher, augmentez-la pour écarter */
+        --cinematographer-offset: 20px;
+      }
+      /* ===========================================
+         Déclarations des polices locales
+         =========================================== */
+      @font-face {
+        font-family: "BarlowCondensed-Thin";
+        src: url("./fonts/BarlowCondensed-Thin.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Anton-Regular";
+        src: url("./fonts/Anton-Regular.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "AlumniSansPinstripe-Regular";
+        src: url("./fonts/AlumniSansPinstripe-Regular.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Aileron-UltraLight";
+        src: url("./fonts/Aileron-UltraLight.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      /* ===========================================
+         Reset de base et styles globaux
+         =========================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: sans-serif; /* Fallback */
+      }
+      /* ===========================================
+         Style du Header et du Menu
+         =========================================== */
+      /* ================= HEADER & MENU COMMUN ================= */
+      header {
+        position: fixed; /* Changé de absolute à fixed pour toutes les pages */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: transparent; /* Ajouté pour uniformité */
+      }
+      .logo img {
+        height: 45px; /* Garder cette valeur partout */
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px; /* Rétabli la valeur de l'index */
+      }
+      nav a {
+        font-family: "AlumniSansPinstripe-Regular", sans-serif;
+        font-size: 30px !important; /* Force la taille partout */
+        color: #ffffff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+      }
+      nav a:hover {
+        color: #ff0000;
+        transform: translateY(-3px);
+      }
+      /* Dropdown unifié */
+      nav ul li .dropdown {
+        display: none;
+        position: absolute;
+        top: 60%;
+        left: 100;
+        padding: 15px;
+        border-radius: 5px;
+      }
+      nav ul li:hover .dropdown {
+        display: block;
+      }
+      nav ul li .dropdown a {
+        font-size: 25px !important;
+        display: block;
+        padding: 8px 0;
+        white-space: nowrap;
+      }
+      /* ===========================================
+         Section Hero (Pleine page avec image de fond)
+         =========================================== */
+      .hero {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        background: url("./images/The Entertainer Selects Digital-51.jpg")
+          no-repeat center center/cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; /* Aligner les éléments sur le côté gauche */
+        text-align: left; /* Texte aligné à gauche */
+        padding-left: 50px; /* Décalage du contenu depuis le bord gauche */
+      }
+      /* ===========================================
+         Texte de la section Hero & Animations modernes
+         =========================================== */
+      .hero-text {
+        position: relative;
+        z-index: 10;
+      }
+      /* Titre principal "MED AYED" */
+      .hero-text h1 {
+        font-family: "Anton-Regular", sans-serif;
+        font-size: 90px;
+        color: #fff;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        animation: popInBounce 1s ease forwards;
+      }
+      /* "Cinematographer" avec espacement contrôlé */
+      .hero-text .sub-title {
+        font-family: "BarlowCondensed-Thin", sans-serif;
+        font-size: 40px;
+        color: red;
+        margin-top: var(--cinematographer-offset);
+        margin-bottom: 03px;
+        animation: popInBounce 1s ease forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+      }
+      /* Tagline */
+      .hero-text .tagline {
+        font-family: "BarlowCondensed-Thin", sans-serif;
+        font-size: 20px;
+        color: #fff;
+        animation: popInBounce 1s ease forwards;
+        animation-delay: 0.4s;
+        opacity: 0;
+      }
+      /* ===========================================
+         Bouton Play Trailer
+         =========================================== */
+      .play-button {
+        position: absolute;
+        bottom: 40px;
+        z-index: 10;
+        padding: 15px 40px;
+        background: #ff0000;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-family: "BarlowCondensed-Thin", sans-serif;
+        transition: background 0.3s ease;
+      }
+      .play-button:hover {
+        background: rgba(255, 24, 24, 0.7);
+      }
+      .cta-button:hover {
+        transform: translateY(-3px);
+      }
+      /* ===========================================
+         Nouvelle Animation "popInBounce"
+         =========================================== */
+      @keyframes popInBounce {
+        0% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        50% {
+          opacity: 0.8;
+          transform: scale(1.2);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header avec logo et menu -->
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="./images/Med Ayed Logo-03.png" alt="Logo" />
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li>
+            <a href="production.html">Production</a>
+            <div class="dropdown">
+              <a href="fiction.html">Fiction</a>
+              <a href="documentary.html">Documentary</a>
+            </div>
+          </li>
+          <li><a href="commercial.html">Commercial</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Section Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <!-- Titre principal "MED AYED" -->
+        <h1>MED AYED</h1>
+        <!-- "Cinematographer" avec contrôle de l'espacement -->
+        <div class="sub-title">Cinematographer</div>
+        <!-- Tagline -->
+        <div class="tagline">Capturing Life's Moments, One Frame at a Time</div>
+      </div>
+      <!-- Bouton Play Trailer qui ouvre la vidéo Vimeo dans un nouvel onglet -->
+      <button
+        class="play-button"
+        onclick="window.open('https://vimeo.com/1013390349', '_blank')"
+      >
+        Play Showreel
+      </button>
+    </section>
+  </body>
+</html>

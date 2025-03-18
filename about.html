@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>MED AYED - About</title>
+      <style>
+         /* =========================================================
+         Réinitialisation et Variables CSS
+         ========================================================= */
+         * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         }
+         :root {
+         --cinema-red: #ff0000;
+         }
+         /* =========================================================
+         Chargement des Polices Locales
+         ========================================================= */
+         @font-face {
+         font-family: "BarlowCondensed-Thin";
+         src: url("./fonts/BarlowCondensed-Thin.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "Anton-Regular";
+         src: url("./fonts/Anton-Regular.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "AlumniSansPinstripe-Regular";
+         src: url("./fonts/AlumniSansPinstripe-Regular.woff2") format("woff2");
+         }
+         @font-face {
+         font-family: "Aileron-UltraLight";
+         src: url("./fonts/Aileron-UltraLight.woff") format("woff");
+         }
+         /* =========================================================
+         Styles Globaux et Arrière-plan
+         ========================================================= */
+         body {
+         font-family: "BarlowCondensed-Thin", sans-serif;
+         background: black;
+         color: white;
+         overflow-x: hidden;
+         position: relative;
+         }
+         .background-container {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100vw;
+         height: 100vh;
+         z-index: -1;
+         }
+         .background-container img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         filter: brightness(0.7);
+         }
+         /* ===========================================
+         Style du Header et du Menu
+         =========================================== */
+         /* ================= HEADER & MENU COMMUN ================= */
+         header {
+         position: fixed; /* Changé de absolute à fixed pour toutes les pages */
+         top: 0;
+         left: 0;
+         width: 100%;
+         z-index: 100;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 20px 40px;
+         background: transparent; /* Ajouté pour uniformité */
+         }
+         .logo img {
+         height: 45px; /* Garder cette valeur partout */
+         }
+         nav ul {
+         list-style: none;
+         display: flex;
+         gap: 30px; /* Rétabli la valeur de l'index */
+         }
+         nav a {
+         font-family: "AlumniSansPinstripe-Regular", sans-serif;
+         font-size: 30px !important; /* Force la taille partout */
+         color: #ffffff;
+         text-transform: uppercase;
+         transition: all 0.3s ease;
+         text-decoration: none;
+         position: relative;
+         }
+         nav a:hover {
+         color: #ff0000;
+         transform: translateY(-3px);
+         }
+         /* Dropdown unifié */
+         nav ul li .dropdown {
+         display: none;
+         position: absolute;
+         top: 60%;
+         left: 100;
+         padding: 15px;
+         border-radius: 5px;
+         }
+         nav ul li:hover .dropdown {
+         display: block;
+         }
+         nav ul li .dropdown a {
+         font-size: 25px !important;
+         display: block;
+         padding: 8px 0;
+         white-space: nowrap;
+         }
+         /* =========================================================
+         Section About – Contenu principal
+         ========================================================= */
+         main {
+         margin-top: 150px; /* Augmenté pour ne pas être trop près du header */
+         padding: 20px 50px;
+         max-width: 1200px;
+         margin-left: auto;
+         margin-right: auto;
+         display: flex;
+         flex-direction: column;
+         gap: 40px;
+         }
+         .about-intro {
+         display: flex;
+         align-items: center;
+         gap: 20px;
+         }
+         .about-photo {
+         flex: 0 0 300px;
+         max-width: 300px;
+         border-radius: 8px;
+         transition: transform 0.3s ease;
+         }
+         .about-photo img {
+         width: 100%;
+         border-radius: 8px;
+         }
+         .about-photo img:hover {
+         transform: scale(1.05);
+         }
+         .about-info {
+         flex: 1;
+         /* Limite la largeur pour que le texte ne déborde pas, vous pouvez ajuster */
+         max-width: 600px;
+         margin-left: 20px;
+         }
+         .about-heading {
+         font-family: "Anton-Regular", sans-serif;
+         color: #ff0000;
+         font-size: 40px;
+         /* Appliquer tout en minuscules et forcer la première lettre en majuscule */
+         text-transform: lowercase;
+         }
+         .about-heading::first-letter {
+         text-transform: uppercase;
+         }
+         /* Animation pour la bio */
+         .bio-text {
+         font-family: "Aileron-UltraLight", sans-serif;
+         font-size: 18px;
+         line-height: 1.6;
+         margin-top: 10px;
+         animation: fadeIn 1s ease-out;
+         }
+         @keyframes fadeIn {
+         from {
+         opacity: 0;
+         transform: translateY(20px);
+         }
+         to {
+         opacity: 1;
+         transform: translateY(0);
+         }
+         }
+         /* =========================================================
+         Sections Equipment & Rates (inchangées)
+         ========================================================= */
+         .info-sections {
+         display: flex;
+         gap: 40px;
+         max-width: 800px;
+         margin: 0 auto;
+         }
+         .info-section {
+         flex: 1;
+         text-align: center;
+         }
+         .info-section .info-title {
+         font-family: "Anton-Regular", sans-serif;
+         font-size: 32px;
+         color: var(--cinema-red);
+         text-transform: uppercase;
+         padding-bottom: 5px;
+         margin-bottom: 10px;
+         }
+         .info-section p {
+         font-family: "Quicksand-Variable", sans-serif;
+         font-size: 18px;
+         text-transform: uppercase;
+         line-height: 1.4;
+         margin-bottom: 8px;
+         }
+         /* =========================================================
+         Logo en bas de page – Fixé, Centré
+         ========================================================= */
+         .page-logo {
+         position: fixed;
+         bottom: 20px;
+         left: 50%;
+         transform: translateX(-50%);
+         height: 40px;
+         opacity: 0.7;
+         z-index: 1000;
+         }
+         /* Responsive */
+         @media (max-width: 768px) {
+         .about-intro {
+         flex-direction: column;
+         text-align: center;
+         }
+         .about-info {
+         margin-left: 0;
+         text-align: center;
+         }
+         .info-sections {
+         flex-direction: column;
+         align-items: center;
+         }
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Arrière-plan -->
+      <div class="background-container">
+         <img src="images/about me. 2jpg.jpg" alt="Background" />
+      </div>
+      <!-- Header -->
+      <header>
+         <div class="logo">
+            <a href="index.html">
+            <img src="images/Med Ayed Logo-03.png" alt="Logo" />
+            </a>
+         </div>
+         <nav>
+            <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="about.html">About</a></li>
+               <li>
+                  <a href="production.html">Production</a>
+                  <div class="dropdown">
+                     <a href="fiction.html">Fiction</a>
+                     <a href="documentary.html">Documentary</a>
+                  </div>
+               </li>
+               <li><a href="commercial.html">Commercial</a></li>
+               <li><a href="contact.html">Contact</a></li>
+            </ul>
+         </nav>
+      </header>
+      <!-- Contenu principal -->
+      <main>
+      <!-- Section About Intro -->
+      <section class="about-intro">
+         <div class="about-photo">
+            <img src="images/Med Headshot_-12.jpg" alt="About Me Photo" />
+         </div>
+         <div class="about-info">
+            <div class="about-heading">biography</div>
+            <div class="bio-text">
+               Med Ayed has been a Director of Photography for 10+ years, specializing in the film, commercial, and
+               documentary industries. Renowned for his hands-on approach, he brings a unique blend of dynamic
+               handheld cinematography and bold, expressive color palettes to every project. Med is also skilled in coloring,
+               with extensive experience using DaVinci Resolve to enhance the visual storytelling of his work.Med has worked with renowned global brands such as F1, blacklane and Qatar Airways
+               Delivering exceptional resultat that align with their prestigious standards
+            </div>
+         </div>
+      </section>
+    
+   </body>
+</html>
